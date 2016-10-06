@@ -48,8 +48,9 @@ See documentation [here](https://git-scm.com/book/ru/v1/Git-%D0%BD%D0%B0-%D1%81%
    sudo cat /var/lib/jenkins/.ssh/id_rsa.pub >> /home/git/.ssh/authorized_keys
 ```
 2.4 Configure version control plugin:
-!!!!!!!!!!!!1 picture
+![vc congig](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/Selection_089.png)
+
 2.5 Configure maven plugin
-!!!!!!!!!!!!!!!! picture
+![Maven plugin config](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/Selection_091.png)
 
 #### 3. Install Docker 
