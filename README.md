@@ -48,9 +48,67 @@ See documentation [here](https://git-scm.com/book/ru/v1/Git-%D0%BD%D0%B0-%D1%81%
    sudo cat /var/lib/jenkins/.ssh/id_rsa.pub >> /home/git/.ssh/authorized_keys
 ```
 2.4 Configure version control plugin:
+
 ![vc congig](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/Selection_089.png)
 
 2.5 Configure maven plugin
+
 ![Maven plugin config](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/Selection_091.png)
 
-#### 3. Install Docker 
+#### 3. Configure Docker 
+
+3.1 Please install Docker according to this [instructions](https://docs.docker.com/engine/installation/linux/ubuntulinux/) 
+
+3.2 Create `Dockerfile` with configuration  
+
+```sh
+FROM jboss/base-jdk:7
+ADD jboss-eap-6.1.1.zip /tmp/
+RUN unzip /tmp/jboss-eap-6.1.1.zip -d /opt/jboss
+
+# Add EAP_HOME environment variable, to easily upgrade the script for different EAP versions
+ENV EAP_HOME /opt/jboss/jboss-eap-6.1
+
+# Add customized data and module librares put it to the root of Dockerfile 
+ADD application-roles.properties /opt/jboss/jboss-eap-6.1/standalone/configuration/
+ADD application-users.properties /opt/jboss/jboss-eap-6.1/standalone/configuration/
+ADD project.ear /opt/jboss/jboss-eap-6.1/standalone/deployments/
+ADD standalone.xml /opt/jboss/jboss-eap-6.1/standalone/configuration/
+ADD logging.properties /opt/jboss/jboss-eap-6.1/standalone/configuration/
+ADD modules /opt/jboss/jboss-eap-6.1/modules/
+
+# Add default admin user
+RUN ./opt/jboss/jboss-eap-6.1.1/bin/add-user.sh admin admin123! --silent
+
+# Enable binding to all network interfaces and debugging inside the EAP
+RUN echo "JAVA_OPTS=\"\$JAVA_OPTS -Dcom.sun.jersey.server.impl.cdi.lookupExtensionInBeanManager=true -Djboss.server.base.dir=/opt/jboss/jboss-eap-6.1/standalone -Djboss.server.name=standalone\"" >> ${EAP_HOME}/bin/standalone.conf
+# Add volume if you want to externalize logs
+VOLUME ${EAP_HOME}/standalone/logs
+EXPOSE 55280
+
+ENTRYPOINT ["/opt/jboss/jboss-eap-6.1/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+CMD []
+```
+
+3.3. Create build.sh that will build Docker image, run it.
+
+```sh
+#!/bin/bash
+
+docker build -t my-docker-image/jboss-eap:6.1.1  .
+```
+
+3.4. Run container from image. 
+```sh
+docker run -p 56280:56280 --add-host=docker:10.10.10.10 -it --rm my-docker-image/jboss-eap:6.1.1
+```
+--add-host=docker:10.10.10.10 - external ip to DB server 
+-p 56280:56280 - exposing port to host machine 
+
+__Note!__ To run docker commanly you need sudo rights, or [add user to Docker Group](http://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo). Since Jenkins is not a user, but [service account](http://stackoverflow.com/a/18081006/3014866)
+
+To overcome this you can add any user to docker group and run it using ssh, I run from git user hance we already added Jenkins ssh key to git user in the step _2.3_.
+
+```sh
+ssh -tt git@myworkplace docker run -p 56280:56280 --add-host=docker:10.6.210.32 -it --rm jmorales/jboss-eap:6.1.1
+```
