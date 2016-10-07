@@ -1,4 +1,4 @@
-# Documentation for installiation of ecosustem for integration tests (git server, jenkins, docker)
+# Documentation for installiation of ecosystem for integration tests (git server, jenkins, docker)
 
 
 Primary invironment:
@@ -42,7 +42,7 @@ See documentation [here](https://git-scm.com/book/ru/v1/Git-%D0%BD%D0%B0-%D1%81%
    sudo apt-get update
    sudo apt-get install jenkins
 ```
-2.2 Install all suggested be default plugins via Jenkins UI localhost:8080
+2.2 Install all plugins suggested being default via Jenkins UI (usually localhost:8080)
 2.3 Add Jenkins ssh key to git user. 
 ```sh
    sudo cat /var/lib/jenkins/.ssh/id_rsa.pub >> /home/git/.ssh/authorized_keys
@@ -102,13 +102,12 @@ docker build -t my-docker-image/jboss-eap:6.1.1  .
 ```sh
 docker run -p 56280:56280 --add-host=docker:10.10.10.10 -it --rm my-docker-image/jboss-eap:6.1.1
 ```
---add-host=docker:10.10.10.10 - external ip to DB server 
--p 56280:56280 - exposing port to host machine 
+* --add-host=docker:10.10.10.10 - external ip to DB server 
 
-__Note!__ To run docker commanly you need sudo rights, or [add user to Docker Group](http://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo). Since Jenkins is not a user, but [service account](http://stackoverflow.com/a/18081006/3014866)
+* -p 56280:56280 - exposing port to host machine 
 
-To overcome this you can add any user to docker group and run it using ssh, I run from git user hance we already added Jenkins ssh key to git user in the step _2.3_.
+__Note!__ To run docker commanly you need sudo rights, or [add user to Docker Group](http://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo). Since Jenkins is not a user, but [service account](http://stackoverflow.com/a/18081006/3014866) you can not do any of this. You can overcome it by adding any user to docker group and run from Jenkins using ssh connection to user, I run it from git user hence we already added Jenkins ssh key to git user in the step _2.3_.
 
 ```sh
-ssh -tt git@myworkplace docker run -p 56280:56280 --add-host=docker:10.6.210.32 -it --rm jmorales/jboss-eap:6.1.1
+ssh -tt git@myworkplace docker run -p 56280:56280 --add-host=docker:10.6.210.32 -it --rm my-docker-image/jboss-eap:6.1.1
 ```
