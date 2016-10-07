@@ -50,11 +50,11 @@ See documentation [here](https://git-scm.com/book/ru/v1/Git-%D0%BD%D0%B0-%D1%81%
 ```
 2.4 Configure version control plugin:
 
-![vc congig](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/Selection_089.png)
+![vc congig](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/docker%2Bjboss/Selection_089.png)
 
 2.5 Configure maven plugin
 
-![Maven plugin config](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/Selection_091.png)
+![Maven plugin config](https://raw.githubusercontent.com/Sergei-Rudenkov/temp_documentation/master/docker%2Bjboss/Selection_091.png)
 
 #### 3. Configure Docker 
 
