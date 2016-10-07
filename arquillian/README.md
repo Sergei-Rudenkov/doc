@@ -1,6 +1,6 @@
 #### Basic arquillian instaliation
 
-1. Create arquillian.xml in the resource root
+ 1. Create arquillian.xml in the resource root
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -23,7 +23,7 @@
 </arquillian>
 ```
 
-2. Add maven dependencies 
+ 2. Add maven dependencies 
 ```xml
     <dependencyManagement>
         <dependencies>
@@ -68,7 +68,7 @@
         </dependency>
 ```
 
-3. Add test to `test` package 
+ 3. Add test to `test` package 
 
 ```java
 @RunWith(Arquillian.class)
@@ -89,7 +89,7 @@ public class AccountTest {
 }
 ```
 
-4. Run with Junit in test phase of maven lifecycle
+ 4. Run with Junit in test phase of maven lifecycle
 ```sh
 mvn test
 ```
