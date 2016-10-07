@@ -84,7 +84,7 @@ public class AccountTest {
 }
 ```
 
- ##### 4) Run with Junit in test phase of maven lifecycle
+##### 4) Run with Junit in test phase of maven lifecycle
 ```sh
 mvn test
 ```
