@@ -43,6 +43,7 @@ See documentation [here](https://git-scm.com/book/ru/v1/Git-%D0%BD%D0%B0-%D1%81%
    sudo apt-get install jenkins
 ```
 2.2 Install all plugins suggested being default via Jenkins UI (usually localhost:8080)
+
 2.3 Add Jenkins ssh key to git user. 
 ```sh
    sudo cat /var/lib/jenkins/.ssh/id_rsa.pub >> /home/git/.ssh/authorized_keys
